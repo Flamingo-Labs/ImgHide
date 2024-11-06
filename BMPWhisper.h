@@ -3,6 +3,19 @@
 
 #include <stdint.h>
 
+//enum for compression
+typedef enum
+{
+    BI_RGB = 0,         // No compression 
+    BI_RLE8 = 1,        // 8-bit Run-Length Encoding
+    BI_RLE4 = 2,        // 4-bit Run-Length Encoding
+    BI_BITFIELDS = 3,   // Bitfields (used for 16/32-bit bitmaps)
+    BI_JPEG = 4,        // JPEG compression
+    BI_PNG = 5          // PNG compression
+} Compression;
+
+#pragma pack(1)
+
 //Holds the header data
 struct BMPFileHeader 
 {
@@ -29,15 +42,5 @@ struct DBIHeader
     uint32_t biClrImportant;       // How many colors are important (0) if biClrUsed is 0
 };
 
-//enum for compression
-typedef enum
-{
-    BI_RGB = 0,         // No compression 
-    BI_RLE8 = 1,        // 8-bit Run-Length Encoding
-    BI_RLE4 = 2,        // 4-bit Run-Length Encoding
-    BI_BITFIELDS = 3,   // Bitfields (used for 16/32-bit bitmaps)
-    BI_JPEG = 4,        // JPEG compression
-    BI_PNG = 5          // PNG compression
-} Compression;
-
+#pragma pack()
 #endif
