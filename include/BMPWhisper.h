@@ -14,7 +14,7 @@ typedef enum
     BI_PNG = 5          // PNG compression
 } Compression;
 
-#pragma pack(1)
+#pragma pack(push, 1)
 
 //Holds the header data
 struct BMPFileHeader 
@@ -42,5 +42,5 @@ struct DBIHeader
     uint32_t biClrImportant;       // How many colors are important (0) if biClrUsed is 0
 };
 
-#pragma pack()
+#pragma pack(pop)
 #endif

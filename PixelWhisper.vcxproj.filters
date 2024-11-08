@@ -15,10 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.c">
+    <ClCompile Include="src/BMPWhisper.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BMPWhisper.c">
+    <ClCompile Include="src/main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\encrypt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\decrypt.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
