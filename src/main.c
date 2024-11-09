@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include "encrypt.h"
-#include "decrypt.h"
+#include "encode.h"
+#include "decode.h"
 
 // Function prototypes
 int parse_arguments(int argc, char *argv[], char **picture_path, char **text_path, int *mode);
@@ -9,7 +9,7 @@ int parse_arguments(int argc, char *argv[], char **picture_path, char **text_pat
 int main(int argc, char *argv[])
 {
     char *picture_path = NULL;
-    char *text_path = NULL;  // Optional now
+    char *text_path = NULL;
     int mode = 0;  // 0: unset, 1: encrypt, 2: decrypt
 
     if (parse_arguments(argc, argv, &picture_path, &text_path, &mode) != 0)
@@ -19,11 +19,11 @@ int main(int argc, char *argv[])
 
     if (mode == 1)
     {
-        return encrypt_text(text_path, picture_path);
+        return encode(picture_path, text_path);
     }
     else
     {
-        return decrypt_text(picture_path, text_path);
+        return decode(picture_path, text_path);
     }
 }
 
@@ -31,11 +31,11 @@ int parse_arguments(int argc, char *argv[], char **picture_path, char **text_pat
 {   //Loop through the args and give values to variables needed
     for (int i = 1; i < argc; i++)
     {
-        if (strcmp(argv[i], "-e") == 0 || strcmp(argv[i], "--encrypt") == 0)
+        if (strcmp(argv[i], "-e") == 0 || strcmp(argv[i], "--encode") == 0)
         {
             *mode = 1;
         }
-        else if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--decrypt") == 0)
+        else if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--decode") == 0)
         {
             *mode = 2;
         }
@@ -50,16 +50,16 @@ int parse_arguments(int argc, char *argv[], char **picture_path, char **text_pat
         else if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
         {
             printf("Steganography tool to hide text in images\n\n");
-            printf("Usage: %s -e|--encrypt -p <image_path> [-t <text_file>]\n", argv[0]);
-            printf("       %s -d|--decrypt -p <image_path> [-t <output_file>]\n", argv[0]);
+            printf("Usage: %s -e|--encode -p <image_path> [-t <text_file>]\n", argv[0]);
+            printf("       %s -d|--decode -p <image_path> [-t <output_file>]\n", argv[0]);
             printf("\nOptions:\n");
-            printf("  -e, --encrypt         Encrypt mode: hide text in image\n");
-            printf("  -d, --decrypt         Decrypt mode: extract text from image\n");
+            printf("  -e, --encode          Encode mode: hide text in image\n");
+            printf("  -d, --decode          Decode mode: extract text from image\n");
             printf("  -p, --picture <path>  Path to the image (required)\n");
-            printf("  -t, --text <path>     Optional: Input text file for encryption\n");
-            printf("                        or output file for decryption\n");
-            printf("                        If not specified for encryption, will prompt for text\n");
-            printf("                        If not specified for decryption, will print to console\n");
+            printf("  -t, --text <path>     Optional: Input text file for encoding\n");
+            printf("                        or output file for decoding\n");
+            printf("                        If not specified for encoding, will prompt for text\n");
+            printf("                        If not specified for decoding, will print to console\n");
             printf("  -h, --help            Show this help message\n");
             return 1;
         }
@@ -78,7 +78,7 @@ int parse_arguments(int argc, char *argv[], char **picture_path, char **text_pat
     }
     if (!*picture_path)
     {
-        fprintf(stderr, "Error: An image file (-p) is required for both encryption and decryption\n");
+        fprintf(stderr, "Error: An image file (-p) is required for both encoding and decoding\n");
         return 1;
     }
 
