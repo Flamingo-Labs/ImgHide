@@ -21,13 +21,13 @@
   <ItemGroup>
     <ClCompile Include="src/BMPWhisper.c" />
     <ClCompile Include="src/main.c" />
-    <ClCompile Include="src/decrypt.c" />
-    <ClCompile Include="src/encrypt.c" />
+    <ClCompile Include="src\decode.c" />
+    <ClCompile Include="src\encode.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\BMPWhisper.h" />
-    <ClInclude Include="include\decrypt.h" />
-    <ClInclude Include="include\encrypt.h" />
+    <ClInclude Include="include\decode.h" />
+    <ClInclude Include="include\encode.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -87,6 +87,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>"C:/Users/Adriana Seda Pagan/source/repos/PixelWhisper/include"</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -116,6 +117,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>"C:/Users/Adriana Seda Pagan/source/repos/PixelWhisper/include"</AdditionalIncludeDirectories>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
