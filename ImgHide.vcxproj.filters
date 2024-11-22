@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src/BMPWhisper.c">
+    <ClCompile Include="src/BMPHide.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src/main.c">
@@ -29,14 +29,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\BMPWhisper.h">
+    <ClInclude Include="include\BMPHide.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\encode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\decode.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

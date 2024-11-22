@@ -1,5 +1,5 @@
-#ifndef BMP_WHISPER_H
-#define BMP_WHISPER_H
+#ifndef BMP_HIDE_H
+#define BMP_HIDE_H
 
 #include <stdint.h>
 

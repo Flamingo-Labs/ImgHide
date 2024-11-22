@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <string.h>
 #include "encode.h"
-#include "BMPWhisper.h"
+#include "BMPHide.h"
 
 #define MAX_BUFFER 51
 //If no input file specified, grab user input
