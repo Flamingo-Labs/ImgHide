@@ -31,16 +31,14 @@ int parse_arguments(int argc, char *argv[], char **picture_path, char **text_pat
 {   //Loop through the args and give values to variables needed
     for (int i = 1; i < argc; i++)
     {
-        if (strcmp(argv[i], "-e") == 0 || strcmp(argv[i], "--encode") == 0)
+        if ((strcmp(argv[i], "-e") == 0 || strcmp(argv[i], "--encode") == 0) && i + 1 < argc)
         {
             *mode = 1;
+            *picture_path = argv[++i];
         }
-        else if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--decode") == 0)
+        else if ((strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--decode") == 0) && i + 1 < argc)
         {
             *mode = 2;
-        }
-        else if ((strcmp(argv[i], "-p") == 0 || strcmp(argv[i], "--picture") == 0) && i + 1 < argc)
-        {
             *picture_path = argv[++i];
         }
         else if ((strcmp(argv[i], "-t") == 0 || strcmp(argv[i], "--text") == 0) && i + 1 < argc)
@@ -50,13 +48,13 @@ int parse_arguments(int argc, char *argv[], char **picture_path, char **text_pat
         else if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
         {
             printf("Steganography tool to hide text in images\n\n");
-            printf("Usage: %s -e|--encode -p <image_path> [-t <text_file>]\n", argv[0]);
-            printf("       %s -d|--decode -p <image_path> [-t <output_file>]\n", argv[0]);
+            printf("Usage: -e|--encode <image_path> -t|--text <text_file>\n");
+            printf("       -d|--decode <image_path> -t|--text <output_file>\n");
             printf("\nOptions:\n");
-            printf("  -e, --encode          Encode mode: hide text in image\n");
-            printf("  -d, --decode          Decode mode: extract text from image\n");
-            printf("  -p, --picture <path>  Path to the image (required)\n");
-            printf("  -t, --text <path>     Optional: Input text file for encoding\n");
+            printf("  -e, --encode <path>   Encode mode: hide text in image\n");
+            printf("  -d, --decode <path>   Decode mode: extract text from image\n");
+            printf("                        Requires a path to an image\n");
+            printf("  -t, --text <path>     Optional: Input path to a text file for encoding\n");
             printf("                        or output file for decoding\n");
             printf("                        If not specified for encoding, will prompt for text\n");
             printf("                        If not specified for decoding, will print to console\n");
@@ -78,7 +76,7 @@ int parse_arguments(int argc, char *argv[], char **picture_path, char **text_pat
     }
     if (!*picture_path)
     {
-        fprintf(stderr, "Error: An image file (-p) is required for both encoding and decoding\n");
+        fprintf(stderr, "Error: An image file is required for both encoding and decoding\n");
         return 1;
     }
 
