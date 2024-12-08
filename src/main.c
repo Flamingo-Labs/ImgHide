@@ -1,34 +1,36 @@
+// Entry point of the program handles, getting the proper commandline arguments and calling the an encoder or decoder
+
 #include <stdio.h>
 #include <string.h>
 #include "encode.h"
-#include "decode.h"
 
 // Function prototypes
-int parse_arguments(int argc, char *argv[], char **picture_path, char **text_path, int *mode);
+int parse_arguments(int argc, char *argv[], char **picture_path,  int *mode);
 
+// Parses arguments and calls the encoder or decoder 
 int main(int argc, char *argv[])
 {
     char *picture_path = NULL;
-    char *text_path = NULL;
     int mode = 0;  // 0: unset, 1: encrypt, 2: decrypt
 
-    if (parse_arguments(argc, argv, &picture_path, &text_path, &mode) != 0)
+    if (parse_arguments(argc, argv, &picture_path, &mode) != 0)
     {
         return 1;
     }
 
     if (mode == 1)
     {
-        return encode(picture_path, text_path);
+        return encode(picture_path);
     }
     else
     {
-        return decode(picture_path, text_path);
+        return decode(picture_path);
     }
 }
 
-int parse_arguments(int argc, char *argv[], char **picture_path, char **text_path, int *mode)
-{   //Loop through the args and give values to variables needed
+// Loops through the args and gives values to variables needed
+int parse_arguments(int argc, char *argv[], char **picture_path, int *mode)
+{   
     for (int i = 1; i < argc; i++)
     {
         if ((strcmp(argv[i], "-e") == 0 || strcmp(argv[i], "--encode") == 0) && i + 1 < argc)
@@ -41,23 +43,17 @@ int parse_arguments(int argc, char *argv[], char **picture_path, char **text_pat
             *mode = 2;
             *picture_path = argv[++i];
         }
-        else if ((strcmp(argv[i], "-t") == 0 || strcmp(argv[i], "--text") == 0) && i + 1 < argc)
-        {
-            *text_path = argv[++i];
-        }
         else if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
         {
             printf("Steganography tool to hide text in images\n\n");
-            printf("Usage: -e|--encode <image_path> -t|--text <text_file>\n");
-            printf("       -d|--decode <image_path> -t|--text <output_file>\n");
+            printf("Usage: -e|--encode <image_path>\n");
+            printf("       -d|--decode <image_path>\n");
             printf("\nOptions:\n");
-            printf("  -e, --encode <path>   Encode mode: hide text in image\n");
+            printf("  -e, --encode <path>   Encode mode: hide text and creates new image copy\n");
             printf("  -d, --decode <path>   Decode mode: extract text from image\n");
             printf("                        Requires a path to an image\n");
-            printf("  -t, --text <path>     Optional: Input path to a text file for encoding\n");
-            printf("                        or output file for decoding\n");
-            printf("                        If not specified for encoding, will prompt for text\n");
-            printf("                        If not specified for decoding, will print to console\n");
+            printf("                        Encoding, will prompt for text\n");
+            printf("                        Decoding, will print message to console\n");
             printf("  -h, --help            Show this help message\n");
             return 1;
         }

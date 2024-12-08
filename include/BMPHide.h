@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-//enum for compression
+// Enum for compression
 typedef enum
 {
     BI_RGB = 0,         // No compression 
@@ -16,17 +16,17 @@ typedef enum
 
 #pragma pack(push, 1)
 
-//Holds the header data
+// Holds the header data
 struct BMPFileHeader 
 {
-    unsigned char bfType[2];        // File signature, BM for .bmp
+    uint16_t bfType;                // File signature, BM for .bmp
     uint32_t bfSize;                // File size including the header
     uint16_t bfReserved1;           // Unused    
     uint16_t bfReserved2;           // Unused
     uint32_t bfOffBits;             // Size of file header and DBI
 };
 
-//holds the DBI data
+// Holds the DBI data
 struct DBIHeader 
 {
     uint32_t biSize;               // Size of the DBI header
@@ -43,4 +43,7 @@ struct DBIHeader
 };
 
 #pragma pack(pop)
+
+int bmp_encoder(const char *picture_path, char *input_text);
+int binary_converter(char *input_text, char *binary_text);
 #endif

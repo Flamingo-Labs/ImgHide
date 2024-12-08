@@ -21,12 +21,10 @@
   <ItemGroup>
     <ClCompile Include="src/BMPHide.c" />
     <ClCompile Include="src/main.c" />
-    <ClCompile Include="src\decode.c" />
     <ClCompile Include="src\encode.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\BMPHide.h" />
-    <ClInclude Include="include\decode.h" />
     <ClInclude Include="include\encode.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
