@@ -21,8 +21,10 @@ int bmp_encoder(const char *picture_path, char *input_text)
     fwrite(&file_header, sizeof(file_header), 1, encoded_picture);
     fwrite(&dbi_header, sizeof(dbi_header), 1, encoded_picture);
 
-    /* conver text to binary and check we have no compression, 24bpp and
-       text bits dont exceed subpixels in image*/
+    /* 
+    convert text to binary and check we have no compression, 24bpp and
+    text bits dont exceed subpixels in image
+    */
     int total_bits_text = binary_converter(input_text, binary_text);
     int total_pixels = dbi_header.biWidth * dbi_header.biHeight;
     if (total_bits_text > total_pixels * 3)
@@ -34,25 +36,37 @@ int bmp_encoder(const char *picture_path, char *input_text)
         return 1;
     }
 
+    // vars for modifying bits
     int padding_bytes = (dbi_header.biWidth * 3) % 4;
     int binary_text_index = 0;
     uint8_t *sub_pixel = (uint8_t *)malloc(dbi_header.biWidth * 3);
+    
+    //loop through each row in the image
     for (int i = 0; i < dbi_header.biHeight; i++)
     {
+        // read row into subpixel array
         int sub_pixel_index = 0;
         fread(sub_pixel, 1, (dbi_header.biWidth * 3), picture_file);
+
+        // loop through pixel
         for (int j = 0; j < dbi_header.biWidth; j++)
         {
+
+            // loop through each subpixel
             for (int k = 0; k < 3; k++)
             {
+                // check if we have no more characters to write
                 if (binary_text_index < total_bits_text)
                 {
+                    // change the value of the sub pixel
                     sub_pixel[sub_pixel_index] = (sub_pixel[sub_pixel_index] & 0xFE) | binary_text[binary_text_index];
                     sub_pixel_index++;
                     binary_text_index++;
                 }
             }
         }
+
+        // write the new pixel row to the new file
         fwrite(sub_pixel, 1, dbi_header.biWidth * 3, encoded_picture);
         if (padding_bytes != 0)
         {
