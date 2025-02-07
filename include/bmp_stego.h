@@ -1,5 +1,5 @@
-#ifndef BMP_HIDE_H
-#define BMP_HIDE_H
+#ifndef BMP_STEGO_H
+#define BMP_STEGO_H
 
 #include <stdint.h>
 

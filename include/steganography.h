@@ -1,5 +1,5 @@
-#ifndef ENCODE_H
-#define ENCODE_H
+#ifndef STEGANOGRAPHY_H
+#define STEGANOGRAPHY_H
 #define MAX_BUFFER 281
 #include <stdint.h>
 

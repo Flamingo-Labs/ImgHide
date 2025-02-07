@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "encode.h"
+#include "steganography.h"
 
 // Function prototypes
 int parse_arguments(int argc, char *argv[], char **picture_path,  int *mode);

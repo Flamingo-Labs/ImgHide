@@ -19,13 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src/BMPHide.c" />
+    <ClCompile Include="bmp_find.c" />
+    <ClCompile Include="src/bmp_hide.c" />
     <ClCompile Include="src/main.c" />
-    <ClCompile Include="src\encode.c" />
+    <ClCompile Include="src/steganography.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\BMPHide.h" />
-    <ClInclude Include="include\encode.h" />
+    <ClInclude Include="include/bmp_stego.h" />
+    <ClInclude Include="include/steganography.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

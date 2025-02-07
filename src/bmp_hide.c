@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include "encode.h"
-#include "BMPHide.h"
+#include "steganography.h"
+#include "bmp_stego.h"
 
 int bmp_encoder(const char *picture_path, char *input_text)
 {
@@ -20,7 +20,6 @@ int bmp_encoder(const char *picture_path, char *input_text)
     FILE *encoded_picture = fopen("a_picture.bmp", "wb");
     fwrite(&file_header, sizeof(file_header), 1, encoded_picture);
     fwrite(&dbi_header, sizeof(dbi_header), 1, encoded_picture);
-
     /* 
     convert text to binary and check we have no compression, 24bpp and
     text bits dont exceed subpixels in image

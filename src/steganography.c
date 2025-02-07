@@ -1,10 +1,16 @@
 // This file will handle figuring out the file type and calling the proper encoder or decoder for the file
+	/*
+	Refactor so instead of closing the file and passing path to the right encoder
+	keep the file open and pass the FILE pointer since we immidiately work with the
+	file to grab the header data
 
+	Refactor so file type check is its own function
+	*/
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
-#include "encode.h"
-#include "BMPHide.h"
+#include "steganography.h"
+#include "bmp_stego.h"
 
 static uint8_t file_type[4];
 
@@ -49,8 +55,35 @@ int encode(char *picture_path)
 	return 0;
 }
 
+//
 int decode(char *picture_path)
 {
+	FILE *picture_file = fopen(picture_path, "rb");
+	if (picture_file == NULL)
+	{
+		return 1;
+	}
+	fread(file_type, sizeof(file_type), 1, picture_file);
+
+	if (compare_file_type(file_type) == 1)
+	{
+		//bmp_decoder(picture_file);
+		printf("");
+	}
+	else if (compare_file_type(file_type) == 2)
+	{
+		printf("call PNG encoder");
+	}
+	else if (compare_file_type(file_type) == 3)
+	{
+		printf("call JPEG encoder");
+	}
+	else
+	{
+		printf("File not supported");
+		return 1;
+	}
+
 	return 0;
 }
 
