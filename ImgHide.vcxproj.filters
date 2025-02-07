@@ -21,9 +21,6 @@
     <ClCompile Include="src/main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\decode.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\encode.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -33,9 +30,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\encode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\decode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
