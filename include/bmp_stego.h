@@ -23,7 +23,7 @@ struct BMPFileHeader
     uint32_t bfSize;                // File size including the header
     uint16_t bfReserved1;           // Unused    
     uint16_t bfReserved2;           // Unused
-    uint32_t bfOffBits;             // Size of file header and DBI
+    uint32_t bfOffset;             // Size of file header and DBI
 };
 
 // Holds the DBI data
@@ -44,6 +44,7 @@ struct DBIHeader
 
 #pragma pack(pop)
 
-int bmp_encoder(const char *picture_path, char *input_text);
+int bmp_encoder(FILE *picture_file, char *input_text);
+int bmp_decoder(FILE *picture_file);
 int binary_converter(char *input_text, char *binary_text);
 #endif

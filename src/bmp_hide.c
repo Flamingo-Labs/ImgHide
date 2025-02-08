@@ -4,22 +4,28 @@
 #include "steganography.h"
 #include "bmp_stego.h"
 
-int bmp_encoder(const char *picture_path, char *input_text)
+int bmp_encoder(FILE *picture_file, char *input_text)
 {
     struct BMPFileHeader file_header;
     struct DBIHeader dbi_header;
     char binary_text[MAX_BUFFER * 8];
 
-    // read header
-    FILE *picture_file = fopen(picture_path, "rb");
+    // Read header data and read head to make sure we are at start of image data
     fseek(picture_file, 0L, SEEK_SET);
     fread(&file_header, sizeof(file_header), 1, picture_file);
     fread(&dbi_header, sizeof(dbi_header), 1, picture_file);
+    fseek(picture_file, file_header.bfOffset, SEEK_SET);
+
+    if (dbi_header.biBitCount != 24 || dbi_header.biCompression != BI_RGB)
+    {
+        return 1;
+    }
     
     // write header
     FILE *encoded_picture = fopen("a_picture.bmp", "wb");
     fwrite(&file_header, sizeof(file_header), 1, encoded_picture);
     fwrite(&dbi_header, sizeof(dbi_header), 1, encoded_picture);
+
     /* 
     convert text to binary and check we have no compression, 24bpp and
     text bits dont exceed subpixels in image
@@ -27,10 +33,6 @@ int bmp_encoder(const char *picture_path, char *input_text)
     int total_bits_text = binary_converter(input_text, binary_text);
     int total_pixels = dbi_header.biWidth * dbi_header.biHeight;
     if (total_bits_text > total_pixels * 3)
-    {
-        return 1;
-    }
-    if (dbi_header.biBitCount != 24 || dbi_header.biCompression != BI_RGB)
     {
         return 1;
     }

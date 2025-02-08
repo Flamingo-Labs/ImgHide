@@ -1,11 +1,5 @@
 // This file will handle figuring out the file type and calling the proper encoder or decoder for the file
-	/*
-	Refactor so instead of closing the file and passing path to the right encoder
-	keep the file open and pass the FILE pointer since we immidiately work with the
-	file to grab the header data
 
-	Refactor so file type check is its own function
-	*/
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
@@ -13,6 +7,7 @@
 #include "bmp_stego.h"
 
 static uint8_t file_type[4];
+static FILE *picture_file;
 
 // Will call the proper encoder depending on the format of the picture
 int encode(char *picture_path)
@@ -24,20 +19,17 @@ int encode(char *picture_path)
 		return 1;
 	}
 	input_text[strcspn(input_text, "\n")] = '\0';
-	
-	// Populate array to check file type
-	FILE *picture_file = fopen(picture_path, "rb");
+
+	grab_file_type(picture_path);
 	if (picture_file == NULL)
 	{
 		return 1;
 	}
-	fread(file_type,sizeof(file_type),1,picture_file);
-	fclose(picture_file);
-	
+
 	// Calls the specialized encoder based on file type
 	if (compare_file_type(file_type) == 1)
 	{
-		return bmp_encoder(picture_path, input_text);
+		return bmp_encoder(picture_file, input_text);
 	}
 	else if (compare_file_type(file_type) == 2)
 	{
@@ -55,20 +47,19 @@ int encode(char *picture_path)
 	return 0;
 }
 
-//
+// Will call the proper decoder depending on the format of the picture
 int decode(char *picture_path)
 {
-	FILE *picture_file = fopen(picture_path, "rb");
+	grab_file_type(picture_path);
 	if (picture_file == NULL)
 	{
 		return 1;
 	}
-	fread(file_type, sizeof(file_type), 1, picture_file);
 
+	// Calls the specialized encoder based on file type
 	if (compare_file_type(file_type) == 1)
 	{
-		//bmp_decoder(picture_file);
-		printf("");
+		return bmp_decoder(picture_file);
 	}
 	else if (compare_file_type(file_type) == 2)
 	{
@@ -117,4 +108,11 @@ int compare_file_type(uint8_t file_type[4])
 	}
 
 	return -1;
+}
+
+// Populate array used to check file type
+void grab_file_type(char *picture_path)
+{
+	picture_file = fopen(picture_path, "rb");
+	fread(file_type, sizeof(file_type), 1, picture_file);
 }
